@@ -3,8 +3,13 @@ import './App.css';
 import { useMainContract } from "../src/hooks/useMainContract";
 import { useTonConnect } from "../src/hooks/useTonConnect";
 import { fromNano } from "@ton/core";
-
+import WebApp from '@twa-dev/sdk'
 // EQAm9XSwEyoVGq36jZwISZfJJWmPeTRa-5MzSnNhJ5ye_Haa
+
+
+function showAlert() {
+  WebApp.showAlert('Hey there!');
+}
 
 function App() {
 
@@ -27,6 +32,8 @@ function App() {
       </div>
 
       <div className="Card">
+        <b>{WebApp.platform}</b>
+        <br />
         <b>Our Contract Address</b>
         <div className="Mint">
           {contractAddress?.slice(0,30) + "..."}
@@ -44,6 +51,14 @@ function App() {
         </div>
       </div>
 
+    <a
+      onClick={() => {
+        showAlert();
+      }}
+    >
+      Show Telegram Alert
+    </a>
+    <br />
       {connected && (
         <a
           onClick={() => {
