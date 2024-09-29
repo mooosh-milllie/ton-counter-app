@@ -46,7 +46,7 @@ function App() {
   return (
     <>
 
-      <div style={{display: "flex"}}>
+      <div style={{display: "flex", flexDirection: "column"}}>
         <p>USER ID: {userId}</p>
         <p>INIT DATA: {initData}</p>
         <p>START PARAM: {startParam}</p>
