@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { TonConnectButton } from "@tonconnect/ui-react";
 import './App.css';
 import { useMainContract } from "../src/hooks/useMainContract";
@@ -13,6 +14,24 @@ function showAlert() {
 
 function App() {
 
+  const [initData, setInitData] = useState('')
+  const [userId, setUserId] = useState('')
+  const [startParam, setStartParam] = useState('')
+
+  useEffect(() => {
+    const initWebApp = async () => {
+      if (typeof window !== 'undefined') {
+        const WebApp = (await import('@twa-dev/sdk')).default;
+        WebApp.ready();
+        setInitData(WebApp.initData);
+        setUserId(WebApp.initDataUnsafe.user?.id.toString() || '');
+        setStartParam(WebApp.initDataUnsafe.start_param || '');
+      }
+    };
+
+    initWebApp();
+  }, [])
+
   const {
     counter_value,
     contractAddress,
@@ -26,6 +45,12 @@ function App() {
 
   return (
     <>
+
+      <div style={{display: "flex"}}>
+        <p>USER ID: {userId}</p>
+        <p>INIT DATA: {initData}</p>
+        <p>START PARAM: {startParam}</p>
+      </div>
       
       <div>
         <TonConnectButton/>
@@ -56,7 +81,7 @@ function App() {
         showAlert();
       }}
     >
-      Show Telegram Alert
+      <button>Show Telegram Alert</button>
     </a>
     <br />
       {connected && (
@@ -65,7 +90,7 @@ function App() {
             sendIncrement();
           }}
         >
-          Increment by 3
+          <button>Increment by 3</button>
         </a>
       )}
 
@@ -77,7 +102,7 @@ function App() {
             sendDeposit();
           }}
         >
-          Send deposit of 1 TON
+          <button>Send deposit of 1 TON</button>
         </a>
       )}
 
@@ -89,7 +114,7 @@ function App() {
             requestWithdrawal();
           }}
         >
-          Request Withdrawal
+          <button>Request Withdrawal</button>  
         </a>
 )}
     </>
